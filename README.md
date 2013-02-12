@@ -19,5 +19,5 @@ vagrant up
 
 This takes almost six minutes on my laptop. Grab a beer.
 
-Three: Configure your blog at http://localhost:8000/wp-admin/install.php.
+Three: Configure your blog at [http://localhost:8000/wp-admin/install.php](http://localhost:8000/wp-admin/install.php).
 
