@@ -1,22 +1,20 @@
 # Cookbook Name:: configure
 # Recipe:: default
 #
-# Copyright 2013, Example Com
+# Copyright 2013, Version2beta LLC
 #
-#
-
 # execute 'DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade'
 
-include_recipe "database"
-
-directory "/home/vagrant/blog/" do
-  owner "vagrant"
-  group "vagrant"
+[ "build-essential", "apache2", "mysql::server",
+  "database", "wordpress", "vim"].each do |r|
+  include_recipe r
 end
 
 directory "/home/vagrant/bin" do
   owner "vagrant"
   group "vagrant"
+  mode 00755
+  recursive true
 end
 
 remote_file "/home/vagrant/bin/vcprompt" do
@@ -41,46 +39,14 @@ cookbook_file "/home/vagrant/.vimrc" do
   mode 00755
 end
 
-gitbag = data_bag_item("git", "ssh_keys")
-ssh_public = gitbag["_default"]["public_key"]
-ssh_private = gitbag["_default"]["private_key"]
-known_hosts = gitbag["_default"]["known_hosts"]
-
-file "/home/vagrant/.ssh/id_rsa.pub" do
-  content ssh_public
-  owner "vagrant"
-  group "vagrant"
-  mode 00600
-end
-
-file "/home/vagrant/.ssh/id_rsa" do
-  content ssh_private
-  owner "vagrant"
-  group "vagrant"
-  mode 00600
-end
-
-file "/home/vagrant/.ssh/known_hosts" do
-  content known_hosts
-  owner "vagrant"
-  group "vagrant"
-  mode 00600
-end
-
-cookbook_file "/home/vagrant/.gitconfig" do
-  source "gitconfig"
-  owner "vagrant"
-  group "vagrant"
-  mode 00755
-end
-
 directory "/var/www/" do
   owner "www-data"
   group "www-data"
   owner 00777
+  recursive true
 end
 
-link "/var/www/blog" do
-  to "/home/vagrant/blog"
+link "/home/vagrant/blog" do
+  to "/var/www/wordpress"
 end
 
