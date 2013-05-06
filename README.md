@@ -1,6 +1,6 @@
 # vagrant-chef-wordpress
 
-A shortcut to a Wordpress dev environment on a Vagrant VirtualBox provisioned with Chef.
+A shortcut to a Wordpress dev environment on a Vagrant VirtualBox provisioned with Chef. Updated to support Vagrant 2 (1.2) configuration.
 
 ## Usage
 
