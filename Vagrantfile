@@ -6,7 +6,10 @@ Vagrant.configure("2") do |config|
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
   # Uncomment the next line if you like to watch.
-  # config.vm.boot_mode = :gui
+  config.vm.provider :virtualbox do |vb|
+    # Don't boot with headless mode
+    #vb.gui = true
+  end
 
   # Port 8000 on the host will go to port 80 on the Vagrant box
   config.vm.network :forwarded_port, guest: 80, host: 8000, auto_correct: true
